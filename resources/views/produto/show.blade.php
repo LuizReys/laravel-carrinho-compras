@@ -1,5 +1,5 @@
 @extends('layout.index')
-@section('page_title','Produto')
+@section('page_title','Produtos')
 
 @section('content')
     <div class="container">

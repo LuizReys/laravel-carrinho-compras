@@ -13,11 +13,16 @@
 
 Auth::routes();
 
-Route::group(['prefix' => '/'], function(){
-	Route::get('/', 'HomeController@index')->name('index');
-	Route::get('produto/{id}', 'ProdutoController@show')->name('produto');
-	Route::get('categoria', 'CategoriaController@index')->name('categoria');
-	Route::get('pedido', 'PedidoController@index')->name('pedido');
+Route::get('/', 'HomeController@index')->name('index');
+
+Route::group(['prefix' => 'produto'], function(){
+	Route::get('/', 'ProdutoController@index')->name('produto');
+	Route::get('/categoria/{categoria?}', 'ProdutoController@index')->name('produto.categoria');
+	Route::get('/{id}', 'ProdutoController@show')->name('produto.show');
+});
+
+Route::group(['prefix' => 'pedido'], function(){
+	Route::get('/', 'PedidoController@index')->name('pedido');
 });
 
 Route::group(['prefix' => 'carrinho'], function(){

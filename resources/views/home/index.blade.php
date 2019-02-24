@@ -19,7 +19,7 @@
 										<h4 class="card-title">{{ $produto->nome }}</h4>
 										<p class="card-title">{{ 'R$ '.number_format($produto->valor, 2, ',', '.') }} </p>
 										<div class="row">
-											<a href="{{ route('produto', $produto->id) }}" class="btn btn-info btn-block">Mais Detalhes</a>
+											<a href="{{ route('produto.show', $produto->id) }}" class="btn btn-info btn-block">Mais Detalhes</a>
 										</div>
 									</div>
 								</div>

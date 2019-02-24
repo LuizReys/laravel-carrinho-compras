@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Produto;
+use App\Categoria;
+use App\CategoriaProduto;
 
 class ProdutoController extends Controller
 {
@@ -12,9 +15,30 @@ class ProdutoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Produto $id)
+    public function index($categoria = null)
     {
-        //
+        $categorias = DB::table('categorias')
+                ->orderBy('nome', 'asc')
+                ->get();
+
+        if(!$categoria)
+        {
+            $produtos = DB::table('produtos')
+                ->orderBy('id', 'desc')
+                ->paginate(6);
+        }else
+        {
+            $categoria = Categoria::findOrFail($categoria);
+
+            $produtos = DB::table('produtos')
+                ->join('categorias_produtos', 'produtos.id', '=', 'categorias_produtos.produto_id')
+                ->join('categorias', 'categorias.id', '=', 'categorias_produtos.categoria_id')
+                ->select('produtos.*')
+                ->where('categorias.id', '=', $categoria->id)
+                ->paginate(6);
+        }
+
+        return view('produto.index', compact('produtos','categorias'));
     }
 
 

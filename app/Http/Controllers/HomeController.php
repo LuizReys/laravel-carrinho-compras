@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Produto;
 
@@ -14,9 +15,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-    	$produtos = Produto::orderBy('id', 'desc')
-                ->limit(4)
-                ->get();
+        $produtos = DB::table('produtos')
+            ->orderBy('id', 'desc')
+            ->limit(4)
+            ->get();
 
         return view('home.index', compact('produtos'));
     }
