@@ -18,7 +18,7 @@ class CreateProdutosTable extends Migration
             $table->string('nome');
             $table->text('descricao');
             $table->string('imagem');
-            $table->decimal('valor', 6, 2)->default(0);
+            $table->decimal('valor', 10, 2)->default(0);
             $table->timestamps();
         });
     }

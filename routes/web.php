@@ -11,10 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix' => '/'], function(){
+	Route::get('/', 'HomeController@index')->name('index');
+	Route::get('produto/{id}', 'ProdutoController@show')->name('produto');
+	Route::get('categoria', 'CategoriaController@index')->name('categoria');
+	Route::get('pedido', 'PedidoController@index')->name('pedido');
+});
+
+Route::group(['prefix' => 'carrinho'], function(){
+	Route::get('/', 'CarrinhoController@index')->name('carrinho');
+});
+
