@@ -27,5 +27,7 @@ Route::group(['prefix' => 'pedido'], function(){
 
 Route::group(['prefix' => 'carrinho'], function(){
 	Route::get('/', 'CarrinhoController@index')->name('carrinho');
+	Route::get('/adicionar/{id}', 'CarrinhoController@store')->name('carrinho.store');
+	Route::get('/finalizar/{id}', 'CarrinhoController@update')->name('carrinho.update');
+	Route::get('/excluir/{pedido}/{produto}/', 'CarrinhoController@destroy')->name('carrinho.destroy');
 });
-

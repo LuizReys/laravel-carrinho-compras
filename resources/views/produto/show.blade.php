@@ -29,11 +29,9 @@
                             {{ $produto->descricao }}
                         </p>
 
-                        <form method="get" action="cart.html">
-                            <a href="{{route('carrinho')}}" class="btn btn-success btn-lg btn-block text-uppercase">
-                                <i class="fa fa-shopping-cart"></i> Adicionar ao carrinho
-                            </a>
-                        </form>
+                        <a href="{{ route('carrinho.store', $produto->id) }}" class="btn btn-success btn-lg btn-block text-uppercase">
+                            <i class="fa fa-shopping-cart"></i> Adicionar ao carrinho
+                        </a>
                     </div>
                 </div>
             </div>

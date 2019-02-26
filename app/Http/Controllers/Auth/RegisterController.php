@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\EnderecoEntrega;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -62,10 +63,33 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $usuario = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        $entrega = EnderecoEntrega::create([
+            'user_id' => $usuario->id,
+            'nome' => $data['nome'],
+            'cep' => $data['cep'],
+            'estado' => $data['estado'],
+            'cidade' => $data['cidade'],
+            'bairro' => $data['bairro'],
+            'rua' => $data['rua'],
+            'numero' => $data['numero'],
+        ]);
+
+        $request = Request();
+
+        if(empty($usuario) or empty($entrega))
+        {
+            $request->session()->flash('mensagem-falha', 'Falha ao se cadastrar. Tente novamente!');
+            return redirect()->route('register');
+        }
+
+        $request->session()->flash('mensagem-sucesso', 'Cadastro efetuado com sucesso!');
+
+        return $usuario;
     }
 }
